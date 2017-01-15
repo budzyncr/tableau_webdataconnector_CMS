@@ -2,7 +2,7 @@
 
 <head>
 
-    <title>CMS Hospital Compare HAI</title>
+    <title>CMS Hospital Compare Hospital Readmission Reduction Program</title>
 <!--Libraries-->
 <meta http-equiv="Cache-Control" content="no-store" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -21,27 +21,23 @@
 
     myConnector.getSchema = function (schemaCallback) {
 var cols = [
-{ id : "provider_id", alias : "provider_id", dataType : tableau.dataTypeEnum.string },
 { id : "hospital_name", alias : "hospital_name", dataType : tableau.dataTypeEnum.string },
-{ id : "address", alias : "address", dataType : tableau.dataTypeEnum.string },
-{ id : "city", alias : "city", dataType : tableau.dataTypeEnum.string },
+{ id : "provider_id", alias : "provider_id", dataType : tableau.dataTypeEnum.string },
 { id : "state", alias : "state", dataType : tableau.dataTypeEnum.string },
-{ id : "zip_code", alias : "zip_code", dataType : tableau.dataTypeEnum.string },
-{ id : "county_name", alias : "county_name", dataType : tableau.dataTypeEnum.string },
-{ id : "phone_number", alias : "phone_number", dataType : tableau.dataTypeEnum.string },
-{ id : "measure_name", alias : "measure_name", dataType : tableau.dataTypeEnum.string },
 { id : "measure_id", alias : "measure_id", dataType : tableau.dataTypeEnum.string },
-{ id : "compared_to_national", alias : "compared_to_national", dataType : tableau.dataTypeEnum.string },
-{ id : "score", alias : "score", dataType : tableau.dataTypeEnum.string },
+{ id : "number_of_discharges", alias : "number_of_discharges", dataType : tableau.dataTypeEnum.string },
 { id : "footnote", alias : "footnote", dataType : tableau.dataTypeEnum.string },
-{ id : "measure_start_date", alias : "measure_start_date", dataType : tableau.dataTypeEnum.string },
-{ id : "measure_end_date", alias : "measure_end_date", dataType : tableau.dataTypeEnum.string },
-{ id : "location", alias : "location", dataType : tableau.dataTypeEnum.string },
+{ id : "readm_ratio", alias : "readm_ratio", dataType : tableau.dataTypeEnum.string },
+{ id : "predicted", alias : "predicted", dataType : tableau.dataTypeEnum.string },
+{ id : "expected", alias : "expected", dataType : tableau.dataTypeEnum.string },
+{ id : "number_of_readmissions", alias : "number_of_readmissions", dataType : tableau.dataTypeEnum.string },
+{ id : "start_date", alias : "start_date", dataType : tableau.dataTypeEnum.string },
+{ id : "end_date", alias : "end_date", dataType : tableau.dataTypeEnum.string },
 ];
 
 var tableInfo = {
-id : "CMS_HospitalCompare_HAI",
-alias : "CMS_HospitalCompare_HAI",
+id : "CMS_HospitalCompare_HospitalReadmissionReductionProgram",
+alias : "HospitalReadmissionReductionProgram",
 columns : cols
 };
 
@@ -50,7 +46,7 @@ schemaCallback([tableInfo]);
 
     myConnector.getData = function (table, doneCallback) {
 
-$.getJSON('https://data.medicare.gov/resource/ppaw-hhm5.json', function(resp) {
+$.getJSON('https://data.medicare.gov/resource/kac9-a9fp.json', function(resp) {
 var feat = resp,
 tableData = [];
 console.log(resp);
@@ -58,22 +54,18 @@ console.log(resp);
 
 for (var i = 0, len = feat.length; i < len; i++) {
 tableData.push({
-"provider_id": feat[i].provider_id,
 "hospital_name": feat[i].hospital_name,
-"address": feat[i].address,
-"city": feat[i].city,
+"provider_id": feat[i].provider_id,
 "state": feat[i].state,
-"zip_code": feat[i].zip_code,
-"county_name": feat[i].county_name,
-"phone_number": feat[i].phone_number,
-"measure_name": feat[i].measure_name,
 "measure_id": feat[i].measure_id,
-"compared_to_national": feat[i].compared_to_national,
-"score": feat[i].score,
+"number_of_discharges": feat[i].number_of_discharges,
 "footnote": feat[i].footnote,
-"measure_start_date": feat[i].measure_start_date,
-"measure_end_date": feat[i].measure_end_date,
-"location": feat[i].location,
+"readm_ratio": feat[i].readm_ratio,
+"predicted": feat[i].predicted,
+"expected": feat[i].expected,
+"number_of_readmissions": feat[i].number_of_readmissions,
+"start_date": feat[i].start_date,
+"end_date": feat[i].end_date,
 });
 }
 
@@ -88,7 +80,7 @@ tableau.registerConnector(myConnector);
 $(document).ready(function () {
 $("#submitButton").click(function () {
 
-tableau.connectionName = "CMS Hospital Compare HAI";
+tableau.connectionName = "CMS Hospital Compare Hospital Readmission Reduction Program";
 tableau.submit();
 
 });
